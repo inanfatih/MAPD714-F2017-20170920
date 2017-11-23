@@ -3,7 +3,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
 
-    private let movies = ["Batman vs Superman", "Blade Runner", "Thor", "Justice", "Wonderwoman", "Dark Tower", "Star Wars"]
+    private let movies = ["Batman vs Superman", "Blade Runner", "Thor", "Justice", "Wonderwoman", "Captain America Civil War asdfasdfasdf", "Dark Tower", "Star Wars"]
     
     let simpleTableIdentifier = "SimpleTableIdentifier"
     
@@ -21,9 +21,24 @@ class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         if (cell == nil)
         {
             cell = UITableViewCell(
-                style: UITableViewCellStyle.default,
+                style: UITableViewCellStyle.value1,
                 reuseIdentifier: simpleTableIdentifier
             )
+        }
+        
+        let image = UIImage(named: "star")
+        cell?.imageView?.image = image
+        let highlightedImage = UIImage(named: "star2")
+        cell?.imageView?.highlightedImage = highlightedImage
+        
+        
+        if indexPath.row<5
+        {
+            cell?.detailTextLabel?.text = "Superhero Movie"
+        }
+        else
+        {
+            cell?.detailTextLabel?.text = "Others"
         }
         
         cell?.textLabel?.text=movies[indexPath.row]
@@ -32,6 +47,37 @@ class ViewController: UIViewController, UITableViewDelegate,UITableViewDataSourc
         
     }
     
-
+    
+    func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+        return indexPath.row%4
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return indexPath.row == 0 ? nil : indexPath
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let rowValue = movies[indexPath.row]
+        let message = "Yor selected \(rowValue)"
+        let controller = UIAlertController(title: "Row Selected",
+                                           message: message,
+                                           preferredStyle: .alert
+                                        )
+        
+        let action = UIAlertAction(
+            title: "Yes I did",
+            style: .default,
+            handler: nil)
+        
+        controller.addAction(action)
+        
+        present(controller, animated:true, completion: nil)
+    }
+    
+    
+    
+    
+ 
+    
 }
 
